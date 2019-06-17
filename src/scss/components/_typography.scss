@@ -1,0 +1,24 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: $primary-colour;
+  -webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  margin: 0 0 .5em;
+  letter-spacing: -.5px;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+strong {
+  font-weight: bold;
+}

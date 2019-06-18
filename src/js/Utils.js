@@ -1,10 +1,13 @@
 class Utils {
+
   static formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   }
+
   static formatCurrency(num) {
     return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
+
   static debounce(func, wait, immediate) {
     var timeout;
     return function () {
@@ -19,6 +22,12 @@ class Utils {
       if (callNow) func.apply(context, args);
     };
   };
+
+  static sanitiseString(string) {
+    return string.trim().toLowerCase();
+  }
+
 }
+
 
 export default Utils;

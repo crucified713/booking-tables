@@ -4,17 +4,15 @@
     border-bottom: 1px solid $black;
     margin-bottom: 1em;
   }
-  &__heading {
-    
-    
+  &__search{
+    min-width: 350px;
+    padding: 0 .5em;
   }
 }
 
 .bookings {
   margin-bottom: 2em;
-  &__heading {
 
-  }
   &__active-row {
     background-color: $light-green;
   }

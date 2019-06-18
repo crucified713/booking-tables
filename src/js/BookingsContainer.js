@@ -3,20 +3,25 @@ import Bookings from './Bookings';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import Utils from './Utils';
+import {FilterContext} from './FilterContext';
 
 dayjs.extend(isBetween);
+
+
 /**
  * Container component
  */
 class BookingsContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      bookings: [],
+      searchString: ''
+    };
   }
 
   componentDidMount() {
-    let
-      bookings = [], 
+    let bookings = [], 
       bookedProductsIDs = [],
       bookedProducts = [],
       bookedSellerIDs = [], bookedSellers = [];
@@ -66,16 +71,14 @@ class BookingsContainer extends React.Component {
           }
           return accumulator;
         }, {});
-        this.setState({ 'bookings': bookings});
+        this.setState({bookings});
       })
       .catch(error => console.error('Error:', error));
   }
 
   handleKeyPress = Utils.debounce(searchString => {
     this.setState({ searchString });
-  }, 200);
-
-  
+  }, 100);
 
   render() {
     let tables = [];
@@ -83,11 +86,17 @@ class BookingsContainer extends React.Component {
       let finalBookings = this.state.bookings;
       tables = Object.keys(finalBookings).map((sellerName) => {
         let bookings = finalBookings[sellerName];
-        return <Bookings
-          key={sellerName}
-          sellerName={sellerName}
-          bookings={bookings}
-        />
+        return (
+          <FilterContext.Provider
+            value={{searchString: this.state.searchString}}
+          >
+            <Bookings
+            key={sellerName}
+            sellerName={sellerName}
+            bookings={bookings}
+            />
+          </FilterContext.Provider>
+        )
       });
     }
       
@@ -98,10 +107,11 @@ class BookingsContainer extends React.Component {
             <h3 className="bookings-container__heading">Bookings</h3>
           </div>
           <div className="col text-right">
-            <input type="text" placeholder="search for booking by product name" value={this.state.searchString || ''} onChange={e => { this.handleKeyPress(e.target.value)}} />
+            <input className="bookings-container__search" type="text" placeholder="search for booking by product name" value={this.state.searchString || ''} onChange={e => { this.handleKeyPress(e.target.value)}} />
           </div>
-          
         </header>
+
+        
         {
           tables.length > 0 
           ? 
@@ -109,6 +119,7 @@ class BookingsContainer extends React.Component {
           :
             <h5 className="text-center">Data is populating, please wait...</h5>
         }
+        
       </>
     )
   }

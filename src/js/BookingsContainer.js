@@ -3,7 +3,6 @@ import Bookings from './Bookings';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import Utils from './Utils';
-import {FilterContext} from './FilterContext';
 
 dayjs.extend(isBetween);
 
@@ -87,15 +86,13 @@ class BookingsContainer extends React.Component {
       tables = Object.keys(finalBookings).map((sellerName) => {
         let bookings = finalBookings[sellerName];
         return (
-          <FilterContext.Provider
-            value={{searchString: this.state.searchString}}
-          >
+
             <Bookings
             key={sellerName}
             sellerName={sellerName}
             bookings={bookings}
+            searchString={this.state.searchString}
             />
-          </FilterContext.Provider>
         )
       });
     }
